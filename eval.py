@@ -118,13 +118,13 @@ class EvalResult(object):
         r_rgb = temp_data["r_rgb"].to(self.device)
         l_mask = temp_data["l_mask"].to(self.device)
         r_mask = temp_data["r_mask"].to(self.device)
-
+        print("net G")
         self.netG.update_feature_by_imgs(l_rgb, r_rgb, l_mask, r_mask)
 
         resolution = self.resolution
         coords, mat = self.create_grid()
         resolutionXYZ = (resolution, resolution, resolution)
-
+        print("flag use octree: ", self.use_octree)
         if self.use_octree:
             init_resolution=64
             threshold = 0.01
@@ -177,7 +177,7 @@ class EvalResult(object):
 
 
         sdf = sdf.reshape(resolutionXYZ)
-
+        print("marching cube")
         verts, faces, normals, values = measure.marching_cubes_lewiner(sdf, 0.5)
 
         verts = np.matmul(mat[:3, :3], verts.T) + mat[:3, 3:4]
@@ -210,6 +210,7 @@ class EvalResult(object):
             if not os.path.exists(save_dir):
                 os.mkdir(save_dir)
             mesh_save_path = join(save_dir, "mesh_%s.obj"%l_rgb_path.split("/")[-1][6:-4])
+            print("mesh save path:", mesh_save_path)
             self.ReconstrucMesh(data_dict, mesh_save_path)
 
 if __name__ == "__main__":

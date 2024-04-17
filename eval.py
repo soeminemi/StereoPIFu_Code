@@ -130,8 +130,8 @@ class EvalResult(object):
             threshold = 0.01
 
             sdf = np.zeros(resolutionXYZ)
-            dirty = np.ones(resolutionXYZ, dtype=np.bool)
-            grid_mask = np.zeros(resolutionXYZ, dtype=np.bool)
+            dirty = np.ones(resolutionXYZ, dtype=bool)
+            grid_mask = np.zeros(resolutionXYZ, dtype=bool)
 
             reso = resolutionXYZ[0] // init_resolution
 

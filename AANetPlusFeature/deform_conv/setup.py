@@ -9,4 +9,4 @@ setup(
             'src/deform_conv_cuda_kernel.cu',
         ]),
     ],
-    cmdclass={'build_ext': BuildExtension})
+    cmdclass={'build_ext': BuildExtension.with_options(use_ninja=False)})
